@@ -27,3 +27,6 @@ app.register_blueprint(auth_bp, url_prefix='/auth')
 
 from app.main import bp as main_bp
 app.register_blueprint(main_bp)
+
+from app.mission import bp as mission_bp
+app.register_blueprint(mission_bp)

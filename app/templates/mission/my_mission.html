@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Hi, {{ current_user.username }}!</h1>
+    {% if mission %}
+    <h2>Your current mission</h2>
+    <ul class="list-group">
+        <li class="list-group-item">任務類別：{{ mission.mission_type }}</li>
+        <li class="list-group-item">開始時間：{{ mission.start_date }}</li>
+        <li class="list-group-item">結束時間：{{ mission.end_date }}</li>
+    </ul>
+    <a href="{{ url_for('mission.end_mission', id=mission.id) }}" type="button" class="btn btn-danger">END MISSION</a>
+    {% else %}
+    <h2>No mission yet</h2>
+    <a href="{{ url_for('mission.new_mission') }}" type="button" class="btn btn-primary">NEW MISSION</a>
+    {% endif %}
+    
+    <!-- {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Newer posts
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    Older posts <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav> -->
+{% endblock %}

@@ -1,0 +1,24 @@
+<table class="table table-hover">
+    <tr>
+        <td>
+            <a href="{{ url_for('main.user', username=log.user.username) }}">
+                {{ log.user.username }}
+            </a>
+            在 {{ moment(log.timestamp).calendar() }} 測量了
+            {% if log.physio_type == 'weight' %}
+            體重
+            <span class="badge badge-info">{{ log.value }}</span> 
+            (kg)
+            {% elif log.physio_type == 'blood_pressure' %}
+            血壓
+            <span class="badge badge-info">{{ log.value }}</span> 
+            (mmHg)
+            {% elif log.physio_type == 'blood_sugar' %}
+            <span class="badge badge-info">{{ log.value }}</span> 
+            (mg/dL)
+            {% endif %} 
+            
+            <a href="{{ url_for('physio.del_physio', id=log.id) }}" type="button" class="btn btn-danger">Remove</a>
+        </td>
+    </tr>
+</table>

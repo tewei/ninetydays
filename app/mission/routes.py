@@ -34,7 +34,9 @@ def new_mission():
 @login_required
 def end_mission(id):
     mission = Mission.query.filter_by(id=id).first_or_404()
-    db.session.delete(mission)
-    db.session.commit()
-    flash('Mission ended~')
-    return render_template('mission/my_mission.html')
+    if (mission.creator.id == current_user.id):
+        db.session.delete(mission)
+        db.session.commit()
+        flash('Mission ended~')
+        return redirect(url_for('mission.my_mission'))
+    return redirect(url_for('mission.my_mission'))

@@ -20,6 +20,7 @@ class UserBasic(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     missions = db.relationship('Mission', backref='creator', lazy='dynamic')
+    physiologs = db.relationship('PhysioLog', backref='user', lazy='dynamic')
     
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
@@ -105,7 +106,15 @@ class Mission(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+class PhysioLog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Float)
+    physio_type = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
 
+    def __repr__(self):
+        return '<Post {}>'.format(self.body)
 
 @login.user_loader
 def load_user(id):

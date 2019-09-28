@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    {% if form %}
+    {{ wtf.quick_form(form) }}
+    <br>
+    {% endif %}
+    <h2>體重</h2>
+    {% for log in weight %}
+        {% include 'physio/_log.html' %}
+    {% endfor %}
+    <h2>血壓</h2>
+    {% for log in blood_pressure %}
+        {% include 'physio/_log.html' %}
+    {% endfor %}
+    <h2>血糖</h2>
+    {% for log in blood_glucose %}
+        {% include 'physio/_log.html' %}
+    {% endfor %}
+    <!-- <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Newer posts
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    Older posts <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav> -->
+{% endblock %}

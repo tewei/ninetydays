@@ -13,15 +13,23 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user_basic.id'))
 )
 
+mission_association = db.Table('mission_association',
+    db.Column('user_basic_id', db.Integer, db.ForeignKey('user_basic.id')),
+    db.Column('mission_id', db.Integer, db.ForeignKey('mission.id'))
+)
+
 class UserBasic(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    missions = db.relationship('Mission', backref='creator', lazy='dynamic')
+
     physiologs = db.relationship('PhysioLog', backref='user', lazy='dynamic')
-    
+    transactions = db.relationship('Transaction', backref='user', lazy='dynamic')
+    mission_id = db.Column(db.Integer, db.ForeignKey('mission.id'))
+    mission = db.relationship('Mission')
+
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     followed = db.relationship(
@@ -97,14 +105,17 @@ class Post(db.Model):
 class Mission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mission_type = db.Column(db.String(140))
+    mission_level = db.Column(db.Integer)
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
+    prize = db.Column(db.Float)
     # body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
+    #user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
+    users = db.relationship("UserBasic", back_populates="mission")
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<Mission {}>'.format(self.body)
 
 class PhysioLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -114,7 +125,17 @@ class PhysioLog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<PhysioLog {}>'.format(self.body)
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Float)
+    transaction_type = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
+
+    def __repr__(self):
+        return '<Transaction {}>'.format(self.body)
 
 @login.user_loader
 def load_user(id):

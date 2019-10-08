@@ -33,3 +33,6 @@ app.register_blueprint(mission_bp)
 
 from app.physio import bp as physio_bp
 app.register_blueprint(physio_bp)
+
+from app.wallet import bp as wallet_bp
+app.register_blueprint(wallet_bp)

@@ -15,7 +15,7 @@ from datetime import datetime
 @bp.route('/my_mission', methods=['GET', 'POST'])
 @login_required
 def my_mission():
-    mission = Mission.query.filter_by(user_id=current_user.id).first()
+    mission = current_user.mission
     return render_template("mission/my_mission.html", mission=mission)
 
 @bp.route('/new_mission', methods=['GET', 'POST'])
@@ -23,7 +23,8 @@ def my_mission():
 def new_mission():
     form = NewMissionForm()
     if form.validate_on_submit():
-        mission = Mission(mission_type=form.mission_type.data, start_date=form.start_date.data, end_date=form.end_date.data, creator=current_user)
+        the_other_user = UserBasic.query.filter_by(username=form.participant.data).first()
+        mission = Mission(mission_type=form.mission_type.data, start_date=form.start_date.data, end_date=form.end_date.data, users=[current_user, the_other_user])
         db.session.add(mission)
         db.session.commit()
         flash('New mission added!')
@@ -34,7 +35,7 @@ def new_mission():
 @login_required
 def end_mission(id):
     mission = Mission.query.filter_by(id=id).first_or_404()
-    if (mission.creator.id == current_user.id):
+    if (current_user.mission.id == mission.id):
         db.session.delete(mission)
         db.session.commit()
         flash('Mission ended~')

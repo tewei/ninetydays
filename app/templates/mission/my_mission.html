@@ -4,11 +4,25 @@
 {% block app_content %}
     <h1>Hi, {{ current_user.username }}!</h1>
     {% if mission %}
-    <h2>Your current mission</h2>
+    <h2>進行中的任務</h2>
     <ul class="list-group">
-        <li class="list-group-item">任務類別：{{ mission.mission_type }}</li>
+        <li class="list-group-item">任務類別：
+                {% if mission.mission_type == 'pk' %}
+                <a class="btn btn-warning">雙人PK</a>
+                {% elif mission.mission_type == 'team' %}
+                <a class="btn btn-primary">組隊競賽</a>
+                {% elif mission.mission_type == 'gift' %}
+                <a class="btn btn-success">好友送禮</a>
+                {% endif %}
+        </li>
+        <li class="list-group-item">任務難度：{{ mission.end_date }}</li>
         <li class="list-group-item">開始時間：{{ mission.start_date }}</li>
         <li class="list-group-item">結束時間：{{ mission.end_date }}</li>
+        <li class="list-group-item">參加者：
+            {% for t in mission.users %}
+                <a href="{{ url_for('main.user', username=t.username) }}" class="btn btn-info">{{ t.username }}</a>
+            {% endfor %}
+        </li>
     </ul>
     <a href="{{ url_for('mission.end_mission', id=mission.id) }}" type="button" class="btn btn-danger">END MISSION</a>
     {% else %}

@@ -1,0 +1,14 @@
+<tr>
+    <td>
+        <a href="{{ url_for('main.user', username=t.user.username) }}">
+            {{ t.user.username }}
+        </a>
+    </td>
+    <td>{{ moment(t.timestamp).calendar() }}</td>
+    <td>
+        <span class="badge badge-info">{{ t.value }}</span> 
+    </td>
+    <td>
+        <a href="{{ url_for('wallet.del_transaction', id=t.id) }}" type="button" class="btn btn-danger">Cancel</a>
+    </td>
+</tr>

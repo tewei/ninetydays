@@ -6,18 +6,52 @@
     {{ wtf.quick_form(form) }}
     <br>
     {% endif %}
+
     <h2>體重</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="col-sm-3">User</th>
+                <th class="col-sm-3">時間</th>
+                <th class="col-sm-3">項目</th>
+                <th class="col-sm-3">刪除</th>
+            </tr>
+        </thead>
     {% for log in weight %}
         {% include 'physio/_log.html' %}
     {% endfor %}
+    </table>
+
     <h2>血壓</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="col-sm-3">User</th>
+                <th class="col-sm-3">時間</th>
+                <th class="col-sm-3">項目</th>
+                <th class="col-sm-3">刪除</th>
+            </tr>
+        </thead>
     {% for log in blood_pressure %}
         {% include 'physio/_log.html' %}
     {% endfor %}
+    </table>
+
     <h2>血糖</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="col-sm-3">User</th>
+                <th class="col-sm-3">時間</th>
+                <th class="col-sm-3">項目</th>
+                <th class="col-sm-3">刪除</th>
+            </tr>
+        </thead>
     {% for log in blood_glucose %}
         {% include 'physio/_log.html' %}
     {% endfor %}
+    </table>
+
     <!-- <nav aria-label="...">
         <ul class="pager">
             <li class="previous{% if not prev_url %} disabled{% endif %}">

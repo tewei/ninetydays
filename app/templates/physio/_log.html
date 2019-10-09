@@ -24,6 +24,9 @@
         <span class="badge badge-info">{{ log.value }}</span> 
         (mg/dL)
         {% endif %}
+        {% if log.mission_id %}
+        <span class="label label-success">任務紀錄</span>
+        {% endif %}
     </td>
     <td>
         <a href="{{ url_for('physio.del_physio', id=log.id) }}" type="button" class="btn btn-danger">Remove</a>

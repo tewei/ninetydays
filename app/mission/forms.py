@@ -8,7 +8,8 @@ class NewMissionForm(FlaskForm):
     start_date = DateField('Start date', id='pickStartDate', validators=[DataRequired()])
     end_date = DateField('End date', id='pickEndDate', validators=[DataRequired()])
     mission_type = SelectField('Mission type', choices=[('pk', '雙人PK'), ('team', '組隊競賽'), ('gift', '好友送禮')])
-    mission_level = SelectField('Mission level', choices=[('easy', '佛系減重'), ('advanced', '精實減脂'), ('combined', '三高掰掰')])
+    level = SelectField('Mission level', choices=[('easy', '佛系減重'), ('advanced', '精實減脂'), ('combined', '三高掰掰')])
+    
     prize = FloatField('Value', validators=[DataRequired()])
     participant = StringField('Participant', validators=[DataRequired()])
     

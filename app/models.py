@@ -105,13 +105,15 @@ class Post(db.Model):
 class Mission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mission_type = db.Column(db.String(140))
-    mission_level = db.Column(db.Integer)
+    level = db.Column(db.String(140))
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     prize = db.Column(db.Float)
+    active = db.Column(db.String(140))
     # body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     #user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
+    physiologs = db.relationship('PhysioLog', backref='mission', lazy='dynamic')
     users = db.relationship("UserBasic", back_populates="mission")
 
     def __repr__(self):
@@ -123,6 +125,7 @@ class PhysioLog(db.Model):
     physio_type = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
+    mission_id = db.Column(db.Integer, db.ForeignKey('mission.id'))
 
     def __repr__(self):
         return '<PhysioLog {}>'.format(self.body)

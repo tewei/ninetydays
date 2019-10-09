@@ -15,7 +15,7 @@
                 <a class="btn btn-success">好友送禮</a>
                 {% endif %}
         </li>
-        <li class="list-group-item">任務難度：{{ mission.end_date }}</li>
+        <li class="list-group-item">任務難度：{{ mission.level }}</li>
         <li class="list-group-item">開始時間：{{ mission.start_date }}</li>
         <li class="list-group-item">結束時間：{{ mission.end_date }}</li>
         <li class="list-group-item">參加者：
@@ -23,10 +23,60 @@
                 <a href="{{ url_for('main.user', username=t.username) }}" class="btn btn-info">{{ t.username }}</a>
             {% endfor %}
         </li>
+        <li class="list-group-item">
+            <a href="{{ url_for('mission.end_mission', id=mission.id) }}" type="button" class="btn btn-danger">END MISSION</a>
+            <a href="{{ url_for('mission.new_mission') }}" type="button" class="btn btn-primary">NEW MISSION</a>
+        </li>
     </ul>
-    <a href="{{ url_for('mission.end_mission', id=mission.id) }}" type="button" class="btn btn-danger">END MISSION</a>
+    
+    <h3>進度</h3>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;">
+            {{ progress }}%
+        </div>
+    </div>
+
+    <h3>執行項目</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>今日測量</strong></div>
+        <div class="panel-body">
+            {% if log_today %}
+            <div class="alert alert-info" role="alert">
+                今日體重為 <span class="badge badge-info">{{ log_today.value }}</span> (kg)
+            </div>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                尚未完成今日體重測量，不如<a href="{{ url_for('physio.my_physio') }}" class="alert-link">現在就去！</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>飲食建議</strong></div>
+        <div class="panel-body">
+            <div class="alert alert-success" role="alert">
+                <a href="#" class="alert-link">...</a>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>運動目標</strong></div>
+        <div class="panel-body">
+            <div class="alert alert-success" role="alert">
+                <a href="#" class="alert-link">...</a>
+            </div>
+        </div>
+    </div>
+    
+
     {% else %}
-    <h2>No mission yet</h2>
+    <h2>現在就開始新任務吧！</h2>
+    <h3>任務類型介紹</h3>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">雙人PK：與好友一起進行90天的減重計畫，看誰積分最高可以贏得對方的獎金！</li>
+        <li class="list-group-item">組隊競賽：與好友組成兩人一組的隊伍，與其他隊伍一起進行減重計畫，勝出的組別可以得到所有獎金！</li>
+        <li class="list-group-item">好友送禮：提供獎金作為好友完成減重計畫的獎勵，由90Days協助他的減重之路！</li>
+    </ul>
     <a href="{{ url_for('mission.new_mission') }}" type="button" class="btn btn-primary">NEW MISSION</a>
     {% endif %}
     

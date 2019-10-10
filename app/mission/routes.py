@@ -56,7 +56,7 @@ def new_mission():
             flash('New transaction updated!')
 
         elif form.mission_type.data == 'gift':
-            t = Transaction(transaction_type='new_mission', value=-form.prize.data, user=current_user, transaction_comment='Gift to '+the_other_user.username)
+            t = Transaction(transaction_type='gift', value=-form.prize.data, user=current_user, transaction_comment='Gift to '+the_other_user.username)
             db.session.add(t)
             db.session.commit()
             flash('New transaction updated!')
@@ -73,7 +73,6 @@ def end_mission(id):
     mission = Mission.query.filter_by(id=id).first_or_404()
     if (current_user.mission.id == mission.id):
         date_today = dt.date.today()
-        ended = False
         diff = mission.end_date - date_today
         winner = None
         max_score = -1

@@ -18,6 +18,11 @@
         <li class="list-group-item">任務難度：{{ mission.level }}</li>
         <li class="list-group-item">開始時間：{{ mission.start_date }}</li>
         <li class="list-group-item">結束時間：{{ mission.end_date }}</li>
+        {% if mission.mission_type == 'pk' %}
+        <li class="list-group-item">任務獎金：{{ mission.prize }} x2</li>
+        {% elif mission.mission_type == 'gift' %}
+        <li class="list-group-item">任務獎金：{{ mission.prize }}</li>
+        {% endif %}
         <li class="list-group-item">參加者：
             {% for t in mission.users %}
                 <a href="{{ url_for('main.user', username=t.username) }}" class="btn btn-info">{{ t.username }}</a>
@@ -35,7 +40,9 @@
             {{ progress }}%
         </div>
     </div>
-
+    {% if ended %}
+    <h3>任務已經結束，請按END MISSION分配獎金！</h3>
+    {% else %}
     <h3>執行項目</h3>
     <div class="panel panel-default">
         <div class="panel-heading"><strong>今日測量</strong></div>
@@ -67,6 +74,8 @@
             </div>
         </div>
     </div>
+    {% endif %}
+    
     
 
     {% else %}

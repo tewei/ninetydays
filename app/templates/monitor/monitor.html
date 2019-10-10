@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+    <h2>醫師管理介面</h2>
+    <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#physioform" role="button" aria-expanded="false" >
+            生理紀錄
+        </a>
+        <a class="btn btn-primary" data-toggle="collapse" href="#bankform" role="button" aria-expanded="false" >
+                帳務管理
+        </a>
+        <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#bankform" aria-expanded="false" aria-controls="collapseExample">
+            帳務管理
+        </button> -->
+    </p>
+
+    <div class="collapse" id="physioform">
+        <div class="card card-body">
+                {% if form %}
+                {{ wtf.quick_form(form) }}
+                <br>
+                {% endif %}            
+        </div>
+    </div>
+
+    <div class="collapse" id="bankform">
+        <div class="card card-body">
+                {% if form_bank %}
+                {{ wtf.quick_form(form_bank) }}
+                <br>
+                {% endif %}
+        </div>
+    </div> 
+
+    <h3>追蹤中的使用者</h3>
+    {% for user in user_monitor %}
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ user.username }}</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">任務類別：
+                        {% if user.mission.mission_type == 'pk' %}
+                        <a class="btn btn-warning">雙人PK</a>
+                        {% elif user.mission.mission_type == 'team' %}
+                        <a class="btn btn-primary">組隊競賽</a>
+                        {% elif user.mission.mission_type == 'gift' %}
+                        <a class="btn btn-success">好友送禮</a>
+                        {% endif %}
+                </li>
+                <li class="list-group-item">任務難度：{{ user.mission.level }}</li>
+                <li class="list-group-item">開始時間：{{ user.mission.start_date }}</li>
+                <li class="list-group-item">結束時間：{{ user.mission.end_date }}</li>
+                <li class="list-group-item">參加者：
+                    {% for t in user.mission.users %}
+                        <a href="{{ url_for('main.user', username=t.username) }}" class="btn btn-info">{{ t.username }}</a>
+                    {% endfor %}
+                </li>
+                <li class="list-group-item">
+                    <a href="{{ url_for('monitor.user_monitor', username=user.username) }}" type="button" class="btn btn-info">CHECK USER</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Newer posts
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    Older posts <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav> -->
+{% endblock %}

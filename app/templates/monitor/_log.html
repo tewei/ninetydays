@@ -41,6 +41,6 @@
         {% endif %}
     </td>
     <td>
-        <a href="{{ url_for('physio.del_physio', id=log.id) }}" type="button" class="btn btn-danger">Remove</a>
+        <a href="{{ url_for('monitor.del_physio', username=log.user.username, id=log.id) }}" type="button" class="btn btn-danger">Remove</a>
     </td>
 </tr>

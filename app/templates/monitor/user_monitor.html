@@ -2,11 +2,11 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
-
+    
+    <h2>{{ user.username }}</h2>
+    
+    <h3>餘額： ${{ current_sum }}</h3>
+    
     <h2>體重</h2>
     <table class="table table-hover">
         <thead>
@@ -18,7 +18,7 @@
             </tr>
         </thead>
     {% for log in weight %}
-        {% include 'physio/_log.html' %}
+        {% include 'monitor/_log.html' %}
     {% endfor %}
     </table>
 
@@ -33,7 +33,7 @@
             </tr>
         </thead>
     {% for log in calorie %}
-        {% include 'physio/_log.html' %}
+        {% include 'monitor/_log.html' %}
     {% endfor %}
     </table>
 
@@ -48,7 +48,7 @@
             </tr>
         </thead>
     {% for log in exercise %}
-        {% include 'physio/_log.html' %}
+        {% include 'monitor/_log.html' %}
     {% endfor %}
     </table>
 

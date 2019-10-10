@@ -96,6 +96,7 @@ class UserBasic(UserMixin, db.Model):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
+    category = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
 
@@ -123,6 +124,8 @@ class PhysioLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float)
     physio_type = db.Column(db.String(140))
+    physio_subtype = db.Column(db.String(140))
+    physio_verify = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
     mission_id = db.Column(db.Integer, db.ForeignKey('mission.id'))
@@ -134,6 +137,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float)
     transaction_type = db.Column(db.String(140))
+    transaction_comment = db.Column(db.String(300))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user_basic.id'))
 

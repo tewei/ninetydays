@@ -80,7 +80,7 @@ def end_mission(id):
             for user in current_user.mission.users:
 
                 num_user_logs = PhysioLog.query.filter(PhysioLog.user_id == user.id, PhysioLog.physio_verify == 'user', PhysioLog.mission_id == id).count()
-                num_physician_logs = PhysioLog.query.filter(PhysioLog.user_id == user.id, PhysioLog.physio_verify == 'user', PhysioLog.mission_id == id).count()
+                num_physician_logs = PhysioLog.query.filter(PhysioLog.user_id == user.id, PhysioLog.physio_verify == 'physician', PhysioLog.mission_id == id).count()
                 
                 #change here for scoring formula
                 score = num_user_logs + 30*num_physician_logs

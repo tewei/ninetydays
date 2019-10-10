@@ -88,18 +88,18 @@ def end_mission(id):
                     winner = user
                     max_score = score
 
-        if(mission.prize is not None):
-            if(mission.mission_type == 'pk'):
-                t = Transaction(transaction_type='add', value=mission.prize*2, user=winner, transaction_comment='Winner of PK')
-                db.session.add(t)
-                db.session.commit()
-                flash('Prize distributed!')
+            if(mission.prize is not None):
+                if(mission.mission_type == 'pk'):
+                    t = Transaction(transaction_type='add', value=mission.prize*2, user=winner, transaction_comment='Winner of PK')
+                    db.session.add(t)
+                    db.session.commit()
+                    flash('Prize distributed!')
 
-            elif(mission.mission_type == 'gift'):
-                t = Transaction(transaction_type='add', value=mission.prize, user=winner, transaction_comment='Received a gift')
-                db.session.add(t)
-                db.session.commit()
-                flash('Gift sent!')
+                elif(mission.mission_type == 'gift'):
+                    t = Transaction(transaction_type='add', value=mission.prize, user=winner, transaction_comment='Received a gift')
+                    db.session.add(t)
+                    db.session.commit()
+                    flash('Gift sent!')
 
         db.session.delete(mission)
         db.session.commit()

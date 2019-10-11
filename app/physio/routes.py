@@ -37,8 +37,13 @@ def my_physio():
     weight = PhysioLog.query.filter_by(user_id=current_user.id).filter_by(physio_type='weight').order_by(PhysioLog.timestamp.desc()).all()
     exercise = PhysioLog.query.filter_by(user_id=current_user.id).filter_by(physio_type='exercise').order_by(PhysioLog.timestamp.desc()).all()
     calorie = PhysioLog.query.filter_by(user_id=current_user.id).filter_by(physio_type='calorie').order_by(PhysioLog.timestamp.desc()).all()
+    if(weight != None):
+        graph_item = []
+        for lg in weight:
+            ms = int(round(lg.timestamp.timestamp()*1000))
+            graph_item.append((ms, lg.value))
 
-    return render_template("physio/my_physio.html", form=form, weight=weight, exercise=exercise, calorie=calorie)
+    return render_template("physio/my_physio.html", form=form, weight=weight, exercise=exercise, calorie=calorie, graph_item=graph_item)
 
 @bp.route('/del_physio/<id>')
 @login_required

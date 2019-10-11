@@ -19,9 +19,9 @@
         <li class="list-group-item">開始時間：{{ mission.start_date }}</li>
         <li class="list-group-item">結束時間：{{ mission.end_date }}</li>
         {% if mission.mission_type == 'pk' %}
-        <li class="list-group-item">任務獎金：{{ mission.prize }} x2</li>
+        <li class="list-group-item">任務獎金：{{ mission.prize }} x2 x0.8</li>
         {% elif mission.mission_type == 'gift' %}
-        <li class="list-group-item">任務獎金：{{ mission.prize }}</li>
+        <li class="list-group-item">任務獎金：{{ mission.prize }} x0.8</li>
         {% endif %}
         <li class="list-group-item">參加者：
             {% for t in mission.users %}

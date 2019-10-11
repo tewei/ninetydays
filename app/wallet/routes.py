@@ -24,7 +24,7 @@ def my_wallet():
         flash('New transaction updated!')
         return redirect(url_for('wallet.my_wallet'))
         
-    transactions = Transaction.query.filter_by(user_id=current_user.id).all()
+    transactions = Transaction.query.filter_by(user_id=current_user.id).order_by(Transaction.timestamp.desc()).all()
     current_sum = db.session.query(func.sum(Transaction.value)).filter_by(user_id=current_user.id).scalar()
     if current_sum is None:
         current_sum = 0
